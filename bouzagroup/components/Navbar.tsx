@@ -56,7 +56,7 @@ const HOLDINGS: Holding[] = [
 
 const ABOUT_LINKS = [
   { label: "Our Story", href: "/us" },
-  { label: "Mission & Vision", href: "/about#mission" },
+  { label: "Mission & Vision", href: "/mission" },
   { label: "Latest News / Press", href: "/news" },
   { label: "Careers", href: "/careers" },
 ];

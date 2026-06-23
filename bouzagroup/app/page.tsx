@@ -108,7 +108,6 @@ const CARD_STYLES: Record<
   },
 };
 
-// Add these images to your /public folder to activate the slideshow
 const HERO_IMAGES = [
   "/hero-1.jpg", 
   "/hero-2.jpg", 
@@ -121,15 +120,13 @@ export default function Home() {
   const cardAccentRefs = useRef<HTMLDivElement[]>([]);
   const heroRef = useRef<HTMLDivElement>(null);
 
-  // Slideshow Logic
   useEffect(() => {
     const timer = setInterval(() => {
       setCurrentSlide((prev) => (prev + 1) % HERO_IMAGES.length);
-    }, 6000); // Changes image every 6 seconds
+    }, 6000);
     return () => clearInterval(timer);
   }, []);
 
-  // Hero entrance animation
   useEffect(() => {
     if (!heroRef.current) return;
     const targets = heroRef.current.querySelectorAll("[data-hero-item]");
@@ -182,12 +179,11 @@ export default function Home() {
       <Navbar />
 
       <main>
-        {/* ===================== HERO / MANIFESTO (ALPHABET FADE STYLE) ===================== */}
+        {/* ===================== HERO / MANIFESTO ===================== */}
         <section
           ref={heroRef}
           className="relative overflow-hidden bg-[#17306D] pt-44 pb-28 lg:pt-56 lg:pb-48"
         >
-          {/* Slideshow Background Engine */}
           <div className="absolute inset-0 z-0">
             {HERO_IMAGES.map((src, index) => (
               <div
@@ -196,10 +192,7 @@ export default function Home() {
                   index === currentSlide ? "opacity-100" : "opacity-0"
                 }`}
               >
-                {/* Fallback solid color behind the image */}
                 <div className="absolute inset-0 bg-[#263D86]"></div>
-                
-                {/* Active Image Component */}
                 <Image 
                   src={src} 
                   alt="Bouza Group Operations" 
@@ -209,10 +202,6 @@ export default function Home() {
                 />
               </div>
             ))}
-
-            {/* Gradient Mask: Solid dark navy on the left (covering text), 
-              fading out smoothly at 40-60% width to reveal the image on the right.
-            */}
             <div className="absolute inset-0 bg-gradient-to-r from-[#17306D] via-[#17306D]/95 via-40% to-transparent pointer-events-none"></div>
           </div>
 
@@ -242,14 +231,14 @@ export default function Home() {
             </p>
             <div data-hero-item className="mt-10 flex flex-wrap gap-4">
               <Link
-                href="/about"
-                className="rounded-full bg-[#EB2027] px-7 py-3.5 text-sm font-medium uppercase tracking-wide text-white transition-colors hover:bg-[#F5B11A] hover:text-[#17306D]"
+                href="/us"
+                className="rounded-none bg-[#EB2027] px-7 py-3.5 text-sm font-medium uppercase tracking-wide text-white transition-colors hover:bg-[#F5B11A] hover:text-[#17306D]"
               >
                 Our Story
               </Link>
               <Link
                 href="/contact"
-                className="flex items-center gap-2 rounded-full border border-white/25 px-7 py-3.5 text-sm font-medium uppercase tracking-wide text-white transition-colors hover:border-[#F5B11A] hover:text-[#F5B11A]"
+                className="flex items-center gap-2 rounded-none border border-white/25 px-7 py-3.5 text-sm font-medium uppercase tracking-wide text-white transition-colors hover:border-[#F5B11A] hover:text-[#F5B11A]"
               >
                 Get In Touch
                 <ArrowUpRight size={16} />
@@ -285,7 +274,7 @@ export default function Home() {
                     }}
                     onMouseEnter={() => handleCardEnter(i)}
                     onMouseLeave={() => handleCardLeave(i)}
-                    className={`group relative flex flex-col justify-between overflow-hidden rounded-2xl p-8 shadow-[0_1px_2px_-1px_rgba(0,0,0,0.25)] ${card.cardBg}`}
+                    className={`group relative flex flex-col justify-between overflow-hidden rounded-none p-8 shadow-[0_1px_2px_-1px_rgba(0,0,0,0.25)] ${card.cardBg}`}
                   >
                     <div
                       ref={(el) => {
@@ -296,9 +285,9 @@ export default function Home() {
                     <div>
                       <div className="flex items-center justify-between">
                         <span
-                          className={`flex h-12 w-12 items-center justify-center rounded-xl ${card.iconBg} ${card.iconText}`}
+                          className={`flex h-12 w-12 items-center justify-center rounded-none ${card.iconBg} ${card.iconText}`}
                         >
-                          <h.Icon size={22} strokeWidth={2} />
+                          <h.Icon size={22} strokeWidth={1} />
                         </span>
                         <span className={`text-xs font-normal tracking-widest ${card.index}`}>
                           {h.index}
@@ -318,6 +307,7 @@ export default function Home() {
                       Visit Portal
                       <ArrowUpRight
                         size={16}
+                        strokeWidth={1}
                         className="transition-transform group-hover:translate-x-1"
                       />
                     </div>
@@ -386,21 +376,21 @@ export default function Home() {
             </div>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
               <div>
-                <Shield className="text-[#EB2027] mb-6" size={36} strokeWidth={1.5} />
+                <Shield className="text-[#EB2027] mb-6" size={36} strokeWidth={1} />
                 <h3 className="text-xl font-medium mb-3">Absolute Reliability</h3>
                 <p className="text-sm font-normal text-white/70 leading-relaxed">
                   We operate in sectors where failure is not an option. From defense materiel to complex logistics, our protocols ensure zero-defect execution.
                 </p>
               </div>
               <div>
-                <Globe className="text-[#0640CE] mb-6" size={36} strokeWidth={1.5} />
+                <Globe className="text-[#0640CE] mb-6" size={36} strokeWidth={1} />
                 <h3 className="text-xl font-medium mb-3">Global Infrastructure</h3>
                 <p className="text-sm font-normal text-white/70 leading-relaxed">
                   A proprietary network spanning continents, giving our partners frictionless access to markets, resources, and end-to-end supply chains.
                 </p>
               </div>
               <div>
-                <Building className="text-[#F5B11A] mb-6" size={36} strokeWidth={1.5} />
+                <Building className="text-[#F5B11A] mb-6" size={36} strokeWidth={1} />
                 <h3 className="text-xl font-medium mb-3">Long-Term Vision</h3>
                 <p className="text-sm font-normal text-white/70 leading-relaxed">
                   We build for decades, not quarters. Our holding structure allows each entity to mature and dominate its respective industry without compromise.
@@ -433,13 +423,12 @@ export default function Home() {
               How can we help you?
             </h2>
 
-            {/* Curved Contact Card */}
-            <div className="relative rounded-3xl lg:rounded-bl-[100px] lg:rounded-tr-[100px] bg-slate-100 p-8 pt-32 lg:p-16 lg:pt-16 flex flex-col lg:flex-row items-center gap-10 lg:gap-16 mt-16 lg:mt-0 text-[#17306D]">
+            {/* Sharp Contact Card */}
+            <div className="relative rounded-none bg-slate-100 p-8 pt-32 lg:p-16 lg:pt-16 flex flex-col lg:flex-row items-center gap-10 lg:gap-16 mt-16 lg:mt-0 text-[#17306D]">
               
               {/* Image Container */}
               <div className="absolute -top-24 lg:-top-16 lg:-left-4 w-56 h-64 lg:w-72 lg:h-80 flex-shrink-0 z-10">
                 <div className="w-full h-full relative">
-                  {/* Active Image Component */}
                   <Image 
                     src="/support.png" 
                     alt="Support Team" 
@@ -462,7 +451,7 @@ export default function Home() {
                 </p>
                 
                 <div className="flex items-center gap-3 mb-8">
-                  <Mail size={18} className="text-[#17306D]/60" />
+                  <Mail size={18} strokeWidth={1} className="text-[#17306D]/60" />
                   <a href="mailto:support@bouzagroup.com" className="text-sm font-medium underline underline-offset-4 hover:text-[#0640CE] transition-colors">
                     support@bouzagroup.com
                   </a>
@@ -470,7 +459,7 @@ export default function Home() {
 
                 <Link
                   href="/contact"
-                  className="inline-block rounded-full bg-[#EB2027] px-8 py-3 text-sm font-medium uppercase tracking-wide text-white transition-colors hover:bg-[#17306D]"
+                  className="inline-block rounded-none bg-[#EB2027] px-8 py-3 text-sm font-medium uppercase tracking-wide text-white transition-colors hover:bg-[#17306D]"
                 >
                   Get in contact
                 </Link>
