@@ -204,18 +204,18 @@ export default function Navbar() {
           <div className="relative flex h-20 items-center justify-between">
             
             {/* Left: Logo */}
-            <div className="flex items-center justify-start lg:w-1/4 z-10">
-              <Link href="/" className="flex items-center" aria-label="Bouza Group home">
-                <Image
-                  src="/bouza.png"
-                  alt="Bouza Group"
-                  width={160}
-                  height={40}
-                  priority
-                  className="h-9 w-auto object-contain"
-                />
-              </Link>
-            </div>
+<div className="flex items-center justify-start lg:w-1/4 z-10">
+  <Link href="/" className="flex items-center" aria-label="Bouza Group home">
+    <Image
+      src="/logo.png"
+      alt="Bouza Group"
+      width={240} 
+      height={80} 
+      priority
+      className="h-16 md:h-20 w-auto object-contain" 
+    />
+  </Link>
+</div>
 
             {/* Center: Desktop Nav */}
             <nav className="hidden lg:flex items-center justify-center gap-10 absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-full">

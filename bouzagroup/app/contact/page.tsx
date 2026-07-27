@@ -225,32 +225,33 @@ export default function ContactPage() {
                 </div>
 
                 <div className="space-y-6">
-                  <div className="flex items-start gap-4">
-                    <MapPin size={18} className="text-[#17306D]/50 mt-1 flex-shrink-0" />
-                    <p className="text-base font-normal text-[#17306D]/80 leading-relaxed">
-                      Mfano Building, Floor No. 1A<br />
-                      Nairobi, Kenya
-                    </p>
-                  </div>
-                  <div className="flex items-start gap-4">
-                    <Mail size={18} className="text-[#17306D]/50 mt-1 flex-shrink-0" />
-                    <a href="mailto:contact@bouzagroup.com" className="text-base font-normal text-[#17306D]/80 hover:text-[#0640CE] transition-colors">
-                      contact@bouzagroup.com
-                    </a>
-                  </div>
-                  <div className="flex items-start gap-4">
-                    <Phone size={18} className="text-[#17306D]/50 mt-1 flex-shrink-0" />
-                    <p className="text-base font-normal text-[#17306D]/80">
-                      +254 (0) 20 123 4567
-                    </p>
-                  </div>
-                  <div className="flex items-start gap-4">
-                    <Clock size={18} className="text-[#17306D]/50 mt-1 flex-shrink-0" />
-                    <p className="text-base font-normal text-[#17306D]/80">
-                      Mon - Fri: 08:00 - 17:00 (EAT)
-                    </p>
-                  </div>
-                </div>
+  <div className="flex items-start gap-4">
+    <MapPin size={18} className="text-[#17306D]/50 mt-1 flex-shrink-0" />
+    <p className="text-base font-normal text-[#17306D]/80 leading-relaxed">
+      Bouza Place HQ, Magharibi Place<br />
+      Mai Mahiu Rd, Nairobi West Area<br />
+      Kenya (P.O Box 24286-00100)
+    </p>
+  </div>
+  <div className="flex items-start gap-4">
+    <Mail size={18} className="text-[#17306D]/50 mt-1 flex-shrink-0" />
+    <a href="mailto:info@bouzagroup.com" className="text-base font-normal text-[#17306D]/80 hover:text-[#0640CE] transition-colors">
+      info@bouzagroup.com
+    </a>
+  </div>
+  <div className="flex items-start gap-4">
+    <Phone size={18} className="text-[#17306D]/50 mt-1 flex-shrink-0" />
+    <p className="text-base font-normal text-[#17306D]/80">
+      +254 117726583
+    </p>
+  </div>
+  <div className="flex items-start gap-4">
+    <Clock size={18} className="text-[#17306D]/50 mt-1 flex-shrink-0" />
+    <p className="text-base font-normal text-[#17306D]/80">
+      Mon - Fri: 08:00 - 17:00 (EAT)
+    </p>
+  </div>
+</div>
               </div>
 
               {/* Interactive Operating Regions Map */}
