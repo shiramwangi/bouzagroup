@@ -204,15 +204,16 @@ export default function Navbar() {
           <div className="relative flex h-20 items-center justify-between">
             
             {/* Left: Logo */}
-<div className="flex items-center justify-start lg:w-1/4 z-10">
+{/* Logo Wrapper */}
+<div className="flex items-center justify-center absolute left-1/2 -translate-x-1/2 lg:static lg:translate-x-0 lg:justify-start lg:w-1/4 z-10">
   <Link href="/" className="flex items-center" aria-label="Bouza Group home">
     <Image
       src="/logo.png"
       alt="Bouza Group"
-      width={240} 
-      height={80} 
+      width={240}
+      height={80}
       priority
-      className="h-16 md:h-20 w-auto object-contain" 
+      className="h-16 md:h-20 w-auto object-contain"
     />
   </Link>
 </div>
