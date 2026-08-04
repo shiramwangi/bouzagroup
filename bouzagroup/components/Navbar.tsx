@@ -6,6 +6,7 @@ import Image from "next/image";
 import { gsap } from "gsap";
 import {
   ChevronDown,
+  ChevronRight,
   Menu,
   X,
   ArrowUpRight,
@@ -61,15 +62,30 @@ const ABOUT_LINKS = [
   { label: "Careers", href: "/careers" },
 ];
 
-const PRODUCT_LINKS = [
-  { label: "Defense Manufacturing", href: "/defense#manufacturing" },
-  { label: "Freight & Forwarding", href: "/logistics#freight" },
-  { label: "Vehicle Dealerships", href: "/motors#dealerships" },
-  { label: "Supply Chain Consulting", href: "/services/consulting" },
-  { label: "Bouza Secure Portal", href: "/portal" },
-  { label: "Freight Tracking", href: "/tracking" },
-  { label: "Fleet Management", href: "/fleet" },
-  { label: "Connected Network", href: "/network" },
+const SOLUTIONS_DATA = [
+  {
+    company: "Bouza Defense",
+    links: [
+      { label: "Defense Manufacturing", href: "/defense#manufacturing" },
+      { label: "Bouza Secure Portal", href: "/portal" },
+    ],
+  },
+  {
+    company: "Bouza Logistics",
+    links: [
+      { label: "Freight & Forwarding", href: "/logistics#freight" },
+      { label: "Freight Tracking", href: "/tracking" },
+      { label: "Supply Chain Consulting", href: "/services/consulting" },
+    ],
+  },
+  {
+    company: "Bouza Motors",
+    links: [
+      { label: "Vehicle Dealerships", href: "/motors#dealerships" },
+      { label: "Fleet Management", href: "/fleet" },
+      { label: "Connected Network", href: "/network" },
+    ],
+  },
 ];
 
 const ACCENT_MAP: Record<
@@ -93,7 +109,7 @@ const ACCENT_MAP: Record<
 function useDropdownAnimation(
   isOpen: boolean,
   dropdownRef: React.RefObject<HTMLDivElement | null>,
-  itemsRef: React.MutableRefObject<HTMLAnchorElement[]>,
+  itemsRef: React.MutableRefObject<HTMLAnchorElement[] | HTMLDivElement[]>,
   chevronRef: React.RefObject<SVGSVGElement | null>
 ) {
   useEffect(() => {
@@ -163,7 +179,7 @@ export default function Navbar() {
 
   const [aboutOpen, setAboutOpen] = useState(false);
   const [companiesOpen, setCompaniesOpen] = useState(false);
-  const [productsOpen, setProductsOpen] = useState(false);
+  const [solutionsOpen, setSolutionsOpen] = useState(false);
 
   const aboutDropdownRef = useRef<HTMLDivElement>(null);
   const aboutItemsRef = useRef<HTMLAnchorElement[]>([]);
@@ -173,15 +189,15 @@ export default function Navbar() {
   const companiesItemsRef = useRef<HTMLAnchorElement[]>([]);
   const companiesChevronRef = useRef<SVGSVGElement>(null);
 
-  const productsDropdownRef = useRef<HTMLDivElement>(null);
-  const productsItemsRef = useRef<HTMLAnchorElement[]>([]);
-  const productsChevronRef = useRef<SVGSVGElement>(null);
+  const solutionsDropdownRef = useRef<HTMLDivElement>(null);
+  const solutionsItemsRef = useRef<HTMLDivElement[]>([]);
+  const solutionsChevronRef = useRef<SVGSVGElement>(null);
 
   const navRef = useRef<HTMLElement>(null);
 
   useDropdownAnimation(aboutOpen, aboutDropdownRef, aboutItemsRef, aboutChevronRef);
   useDropdownAnimation(companiesOpen, companiesDropdownRef, companiesItemsRef, companiesChevronRef);
-  useDropdownAnimation(productsOpen, productsDropdownRef, productsItemsRef, productsChevronRef);
+  useDropdownAnimation(solutionsOpen, solutionsDropdownRef, solutionsItemsRef, solutionsChevronRef);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 12);
@@ -200,152 +216,188 @@ export default function Navbar() {
             : "bg-[#17306D]/90 backdrop-blur-md border-white/10"
         }`}
       >
-        <div className="mx-auto max-w-7xl px-6 lg:px-10">
-          <div className="relative flex h-20 items-center justify-between">
+        <div className="mx-auto max-w-[1440px] px-6 lg:px-10">
+          {/* Reduced height back down to a sleek h-20 (80px) standard */}
+          <div className="relative flex h-20 items-center justify-between w-full">
             
-            {/* Left: Logo */}
-{/* Logo Wrapper */}
-<div className="flex items-center justify-center absolute left-1/2 -translate-x-1/2 lg:static lg:translate-x-0 lg:justify-start lg:w-1/4 z-10">
-  <Link href="/" className="flex items-center" aria-label="Bouza Group home">
-    <Image
-      src="/logo.png"
-      alt="Bouza Group"
-      width={240}
-      height={80}
-      priority
-      className="h-16 md:h-20 w-auto object-contain"
-    />
-  </Link>
-</div>
+            {/* ================= MOBILE SPACER ================= */}
+            <div className="flex-1 lg:hidden"></div>
 
-            {/* Center: Desktop Nav */}
-            <nav className="hidden lg:flex items-center justify-center gap-10 absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-full">
-              
-              {/* About Us Dropdown */}
-              <div
-                className="relative"
-                onMouseEnter={() => setAboutOpen(true)}
-                onMouseLeave={() => setAboutOpen(false)}
-              >
-                <button
-                  type="button"
-                  onClick={() => setAboutOpen((v) => !v)}
-                  aria-expanded={aboutOpen}
-                  className="flex items-center gap-1.5 text-sm font-medium uppercase tracking-wide text-white hover:text-[#F5B11A] transition-colors"
-                >
-                  About Us
-                  <ChevronDown ref={aboutChevronRef} size={16} strokeWidth={2} className="text-white/70" />
-                </button>
-
+            {/* ================= LEFT WING ================= */}
+            <div className="hidden lg:flex flex-1 items-center justify-end pr-8 xl:pr-14 z-10">
+              <nav className="flex items-center gap-8 xl:gap-10">
+                
+                {/* About Us Dropdown */}
                 <div
-                  ref={aboutDropdownRef}
-                  style={{ display: "none" }}
-                  className="absolute left-1/2 top-full mt-3 w-64 -translate-x-1/2 rounded-2xl border border-white/10 bg-[#17306D] p-2 shadow-2xl"
+                  className="relative"
+                  onMouseEnter={() => setAboutOpen(true)}
+                  onMouseLeave={() => setAboutOpen(false)}
                 >
-                  {ABOUT_LINKS.map((link, i) => (
-                    <Link
-                      key={link.label}
-                      href={link.href}
-                      ref={(el) => { if (el) aboutItemsRef.current[i] = el; }}
-                      className="block rounded-xl px-4 py-3 text-sm font-medium text-white transition-colors hover:bg-white/5 hover:text-[#F5B11A]"
-                    >
-                      {link.label}
-                    </Link>
-                  ))}
-                </div>
-              </div>
+                  <button
+                    type="button"
+                    onClick={() => setAboutOpen((v) => !v)}
+                    aria-expanded={aboutOpen}
+                    className="flex items-center gap-1.5 text-sm font-medium uppercase tracking-wide text-white hover:text-[#F5B11A] transition-colors"
+                  >
+                    About Us
+                    <ChevronDown ref={aboutChevronRef} size={16} strokeWidth={2} className="text-white/70" />
+                  </button>
 
-              {/* Companies Dropdown */}
-              <div
-                className="relative"
-                onMouseEnter={() => setCompaniesOpen(true)}
-                onMouseLeave={() => setCompaniesOpen(false)}
-              >
-                <button
-                  type="button"
-                  onClick={() => setCompaniesOpen((v) => !v)}
-                  aria-expanded={companiesOpen}
-                  className="flex items-center gap-1.5 text-sm font-medium uppercase tracking-wide text-white hover:text-[#F5B11A] transition-colors"
-                >
-                  Our Companies
-                  <ChevronDown ref={companiesChevronRef} size={16} strokeWidth={2} className="text-white/70" />
-                </button>
-
-                <div
-                  ref={companiesDropdownRef}
-                  style={{ display: "none" }}
-                  className="absolute left-1/2 top-full mt-3 w-[420px] -translate-x-1/2 rounded-2xl border border-white/10 bg-[#17306D] p-2 shadow-2xl"
-                >
-                  {HOLDINGS.map((h, i) => {
-                    const accent = ACCENT_MAP[h.accent];
-                    return (
+                  <div
+                    ref={aboutDropdownRef}
+                    style={{ display: "none" }}
+                    className="absolute left-1/2 top-full mt-3 w-64 -translate-x-1/2 rounded-2xl border border-white/10 bg-[#17306D] p-2 shadow-2xl"
+                  >
+                    {ABOUT_LINKS.map((link, i) => (
                       <Link
-                        key={h.name}
-                        href={h.href}
-                        ref={(el) => { if (el) companiesItemsRef.current[i] = el; }}
-                        className="group flex items-start gap-4 rounded-xl p-4 transition-colors hover:bg-white/5"
+                        key={link.label}
+                        href={link.href}
+                        ref={(el) => { if (el) aboutItemsRef.current[i] = el; }}
+                        className="block rounded-xl px-4 py-3 text-sm font-medium text-white transition-colors hover:bg-white/5 hover:text-[#F5B11A]"
                       >
-                        <span className={`mt-0.5 flex h-10 w-10 flex-none items-center justify-center rounded-lg bg-white/10 ${accent.text} transition-colors ${accent.groupHover}`}>
-                          <h.Icon size={18} strokeWidth={2} />
-                        </span>
-                        <span className="flex-1">
-                          <span className="flex items-center gap-2">
-                            <span className="text-sm font-medium text-white">
-                              {h.name}
-                            </span>
-                            <ArrowUpRight
-                              size={14}
-                              className={`opacity-0 -translate-x-1 transition-all group-hover:opacity-100 group-hover:translate-x-0 ${accent.text}`}
-                            />
-                          </span>
-                          <span className="mt-0.5 block text-xs font-normal text-white/60">
-                            {h.tagline}
-                          </span>
-                        </span>
+                        {link.label}
                       </Link>
-                    );
-                  })}
+                    ))}
+                  </div>
                 </div>
-              </div>
 
-              {/* Products & Services Dropdown */}
-              <div
-                className="relative"
-                onMouseEnter={() => setProductsOpen(true)}
-                onMouseLeave={() => setProductsOpen(false)}
-              >
-                <button
-                  type="button"
-                  onClick={() => setProductsOpen((v) => !v)}
-                  aria-expanded={productsOpen}
-                  className="flex items-center gap-1.5 text-sm font-medium uppercase tracking-wide text-white hover:text-[#F5B11A] transition-colors"
-                >
-                  Products &amp; Services
-                  <ChevronDown ref={productsChevronRef} size={16} strokeWidth={2} className="text-white/70" />
-                </button>
+                {/* Standard Links */}
+                <Link href="/who-we-are" className="text-sm font-medium uppercase tracking-wide text-white hover:text-[#F5B11A] transition-colors">
+                  Who We Are
+                </Link>
+                <Link href="/why-bouza" className="text-sm font-medium uppercase tracking-wide text-white hover:text-[#F5B11A] transition-colors">
+                  Why Bouza
+                </Link>
 
+              </nav>
+            </div>
+
+            {/* ================= CENTER (LOGO) ================= */}
+            <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-20 flex items-center justify-center lg:static lg:translate-x-0 lg:translate-y-0 shrink-0 pointer-events-none lg:pointer-events-auto">
+              <Link href="/" className="flex items-center pointer-events-auto" aria-label="Bouza Group home">
+                {/* Slimmed down the logo dimensions to fit perfectly inside the sleek h-20 header */}
+                <Image
+                  src="/logo.png"
+                  alt="Bouza Group"
+                  width={240}
+                  height={80}
+                  priority
+                  className="h-10 lg:h-12 xl:h-14 w-auto object-contain"
+                />
+              </Link>
+            </div>
+
+            {/* ================= RIGHT WING ================= */}
+            <div className="hidden lg:flex flex-1 items-center justify-between pl-8 xl:pl-14 z-10">
+              <nav className="flex items-center gap-8 xl:gap-10">
+                {/* Our Companies Dropdown */}
                 <div
-                  ref={productsDropdownRef}
-                  style={{ display: "none" }}
-                  className="absolute left-1/2 top-full mt-3 w-[280px] -translate-x-1/2 rounded-2xl border border-white/10 bg-[#17306D] p-2 shadow-2xl"
+                  className="relative"
+                  onMouseEnter={() => setCompaniesOpen(true)}
+                  onMouseLeave={() => setCompaniesOpen(false)}
                 >
-                  {PRODUCT_LINKS.map((link, i) => (
-                    <Link
-                      key={link.label}
-                      href={link.href}
-                      ref={(el) => { if (el) productsItemsRef.current[i] = el; }}
-                      className="block rounded-xl px-4 py-3 text-sm font-medium text-white transition-colors hover:bg-white/5 hover:text-[#F5B11A]"
-                    >
-                      {link.label}
-                    </Link>
-                  ))}
+                  <button
+                    type="button"
+                    onClick={() => setCompaniesOpen((v) => !v)}
+                    aria-expanded={companiesOpen}
+                    className="flex items-center gap-1.5 text-sm font-medium uppercase tracking-wide text-white hover:text-[#F5B11A] transition-colors"
+                  >
+                    Our Companies
+                    <ChevronDown ref={companiesChevronRef} size={16} strokeWidth={2} className="text-white/70" />
+                  </button>
+
+                  <div
+                    ref={companiesDropdownRef}
+                    style={{ display: "none" }}
+                    className="absolute left-1/2 top-full mt-3 w-[420px] -translate-x-1/2 rounded-2xl border border-white/10 bg-[#17306D] p-2 shadow-2xl"
+                  >
+                    {HOLDINGS.map((h, i) => {
+                      const accent = ACCENT_MAP[h.accent];
+                      return (
+                        <Link
+                          key={h.name}
+                          href={h.href}
+                          ref={(el) => { if (el) companiesItemsRef.current[i] = el; }}
+                          className="group flex items-start gap-4 rounded-xl p-4 transition-colors hover:bg-white/5"
+                        >
+                          <span className={`mt-0.5 flex h-10 w-10 flex-none items-center justify-center rounded-lg bg-white/10 ${accent.text} transition-colors ${accent.groupHover}`}>
+                            <h.Icon size={18} strokeWidth={2} />
+                          </span>
+                          <span className="flex-1">
+                            <span className="flex items-center gap-2">
+                              <span className="text-sm font-medium text-white">
+                                {h.name}
+                              </span>
+                              <ArrowUpRight
+                                size={14}
+                                className={`opacity-0 -translate-x-1 transition-all group-hover:opacity-100 group-hover:translate-x-0 ${accent.text}`}
+                              />
+                            </span>
+                            <span className="mt-0.5 block text-xs font-normal text-white/60">
+                              {h.tagline}
+                            </span>
+                          </span>
+                        </Link>
+                      );
+                    })}
+                  </div>
                 </div>
-              </div>
 
-            </nav>
+                {/* Solutions Nested Dropdown */}
+                <div
+                  className="relative"
+                  onMouseEnter={() => setSolutionsOpen(true)}
+                  onMouseLeave={() => setSolutionsOpen(false)}
+                >
+                  <button
+                    type="button"
+                    onClick={() => setSolutionsOpen((v) => !v)}
+                    aria-expanded={solutionsOpen}
+                    className="flex items-center gap-1.5 text-sm font-medium uppercase tracking-wide text-white hover:text-[#F5B11A] transition-colors"
+                  >
+                    Solutions
+                    <ChevronDown ref={solutionsChevronRef} size={16} strokeWidth={2} className="text-white/70" />
+                  </button>
 
-            {/* Right: CTA & Mobile Toggle */}
-            <div className="flex items-center justify-end lg:w-1/4 z-10">
+                  <div
+                    ref={solutionsDropdownRef}
+                    style={{ display: "none" }}
+                    className="absolute left-1/2 top-full mt-3 w-[260px] -translate-x-1/2 rounded-2xl border border-white/10 bg-[#17306D] p-2 shadow-2xl"
+                  >
+                    {SOLUTIONS_DATA.map((solution, i) => (
+                      <div 
+                        key={solution.company} 
+                        ref={(el) => { if (el) solutionsItemsRef.current[i] = el; }}
+                        className="group/item relative rounded-xl hover:bg-white/5 transition-colors"
+                      >
+                        <button className="w-full flex items-center justify-between px-4 py-3.5 text-sm font-medium text-white group-hover/item:text-[#F5B11A]">
+                          {solution.company}
+                          <ChevronRight size={16} strokeWidth={2} className="text-white/40 group-hover/item:text-[#F5B11A] transition-colors" />
+                        </button>
+                        
+                        {/* Nested Sub-menu */}
+                        <div className="absolute right-full top-0 mr-1 w-[280px] rounded-2xl border border-white/10 bg-[#17306D] p-2 shadow-2xl opacity-0 invisible group-hover/item:visible group-hover/item:opacity-100 transition-all duration-200 translate-x-2 group-hover/item:translate-x-0">
+                          <div className="absolute -right-2 top-0 bottom-0 w-4" /> 
+                          {solution.links.map((link) => (
+                            <Link
+                              key={link.label}
+                              href={link.href}
+                              className="block rounded-xl px-4 py-3 text-sm font-medium text-white transition-colors hover:bg-white/5 hover:text-[#F5B11A]"
+                            >
+                              {link.label}
+                            </Link>
+                          ))}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                <Link href="/team" className="text-sm font-medium uppercase tracking-wide text-white hover:text-[#F5B11A] transition-colors">
+                  Our Team
+                </Link>
+              </nav>
+
               <button
                 type="button"
                 onClick={() => setIsContactOpen(true)}
@@ -353,28 +405,32 @@ export default function Navbar() {
               >
                 Contact Us
               </button>
-              
+            </div>
+
+            {/* ================= MOBILE MENU TOGGLE ================= */}
+            <div className="flex flex-1 lg:hidden items-center justify-end z-10 pointer-events-auto">
               <button
                 type="button"
                 onClick={() => setMobileOpen((v) => !v)}
-                className="lg:hidden text-white"
+                className="text-white"
                 aria-label="Toggle menu"
               >
                 {mobileOpen ? <X size={26} /> : <Menu size={26} />}
               </button>
             </div>
+
           </div>
         </div>
 
-        {/* Mobile menu */}
+        {/* ================= MOBILE MENU OVERLAY ================= */}
         {mobileOpen && (
           <div className="lg:hidden border-t border-white/10 bg-[#17306D] px-6 py-6 h-screen overflow-y-auto pb-32">
-            <div className="flex flex-col gap-8">
+            <div className="flex flex-col gap-10">
               
-              {/* About Section */}
+              {/* Left Wing Elements */}
               <div>
                 <p className="mb-3 text-sm font-medium uppercase tracking-wide text-white/50 border-b border-white/10 pb-2">
-                  About Us
+                  Company
                 </p>
                 <div className="flex flex-col gap-3 pl-2 mt-4">
                   {ABOUT_LINKS.map((link) => (
@@ -387,10 +443,12 @@ export default function Navbar() {
                       {link.label}
                     </Link>
                   ))}
+                  <Link href="/who-we-are" onClick={() => setMobileOpen(false)} className="text-sm font-medium text-white hover:text-[#F5B11A]">Who We Are</Link>
+                  <Link href="/why-bouza" onClick={() => setMobileOpen(false)} className="text-sm font-medium text-white hover:text-[#F5B11A]">Why Bouza</Link>
                 </div>
               </div>
 
-              {/* Companies Section */}
+              {/* Right Wing Elements: Companies */}
               <div>
                 <p className="mb-3 text-sm font-medium uppercase tracking-wide text-white/50 border-b border-white/10 pb-2">
                   Our Companies
@@ -417,35 +475,55 @@ export default function Navbar() {
                 </div>
               </div>
 
-              {/* Products & Services Section */}
+              {/* Right Wing Elements: Solutions (Nested visually for mobile) */}
               <div>
                 <p className="mb-3 text-sm font-medium uppercase tracking-wide text-white/50 border-b border-white/10 pb-2">
-                  Products &amp; Services
+                  Solutions
                 </p>
-                <div className="flex flex-col gap-3 pl-2 mt-4">
-                  {PRODUCT_LINKS.map((link) => (
-                    <Link
-                      key={link.label}
-                      href={link.href}
-                      onClick={() => setMobileOpen(false)}
-                      className="text-sm font-medium text-white hover:text-[#F5B11A]"
-                    >
-                      {link.label}
-                    </Link>
+                <div className="flex flex-col gap-6 pl-2 mt-4">
+                  {SOLUTIONS_DATA.map((solution) => (
+                    <div key={solution.company}>
+                      <span className="block text-sm font-medium text-[#F5B11A] mb-3">
+                        {solution.company}
+                      </span>
+                      <div className="flex flex-col gap-3 pl-3 border-l border-white/10">
+                        {solution.links.map((link) => (
+                          <Link
+                            key={link.label}
+                            href={link.href}
+                            onClick={() => setMobileOpen(false)}
+                            className="text-sm font-medium text-white/80 hover:text-white transition-colors"
+                          >
+                            {link.label}
+                          </Link>
+                        ))}
+                      </div>
+                    </div>
                   ))}
                 </div>
               </div>
 
-              <button
-                type="button"
-                onClick={() => {
-                  setMobileOpen(false);
-                  setIsContactOpen(true);
-                }}
-                className="w-full block rounded-full bg-[#F5B11A] px-5 py-3 mt-4 text-center text-sm font-medium uppercase tracking-wide text-[#17306D]"
-              >
-                Contact Us
-              </button>
+              {/* Team & Contact CTA */}
+              <div className="pt-4 border-t border-white/10">
+                <Link 
+                  href="/team" 
+                  onClick={() => setMobileOpen(false)}
+                  className="block text-sm font-medium text-white uppercase tracking-wide mb-6 hover:text-[#F5B11A]"
+                >
+                  Our Team
+                </Link>
+                <button
+                  type="button"
+                  onClick={() => {
+                    setMobileOpen(false);
+                    setIsContactOpen(true);
+                  }}
+                  className="w-full block rounded-full bg-[#EB2027] px-5 py-3.5 text-center text-sm font-medium uppercase tracking-wide text-white shadow-lg"
+                >
+                  Contact Us
+                </button>
+              </div>
+
             </div>
           </div>
         )}
